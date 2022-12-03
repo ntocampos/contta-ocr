@@ -5,5 +5,12 @@
   "repository": "https://github.com/ntocampos/contta-ocr.git",
   "author": "Moisés Neto",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "tesseract.js": "^4.0.0"
+  }
 }
