@@ -8,9 +8,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "tsc"
   },
   "dependencies": {
     "tesseract.js": "^4.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3"
   }
 }
