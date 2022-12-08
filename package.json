@@ -8,9 +8,8 @@
   "author": "Moisés Neto",
   "license": "MIT",
   "private": true,
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "start": "node index.js",
     "build": "tsc"
   },
   "dependencies": {
@@ -18,7 +17,6 @@
     "tesseract.js": "^4.0.0"
   },
   "devDependencies": {
-    "@types/mathjs": "^9.4.2",
     "@types/node": "^18.11.11",
     "prettier": "^2.8.1",
     "typescript": "^4.9.3"

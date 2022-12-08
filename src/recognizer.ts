@@ -3,9 +3,8 @@ import { Options } from './parseBill'
 
 const recognizer = async (imagePath: string, opts: Options) => {
   const worker = await createWorker({
-    logger: opts?.logger || undefined,
-    errorHandler: opts?.errorHandler || undefined,
-    dataPath: './trainneddata',
+    logger: opts?.logger || (() => undefined),
+    errorHandler: opts?.errorHandler || (() => undefined),
   })
   const language = opts?.language || 'por'
 

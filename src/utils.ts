@@ -1,4 +1,4 @@
-import mathjs from 'mathjs'
+import { std, mean } from 'mathjs'
 
 type Ocurrences = {
   [key: string]: number
@@ -44,10 +44,8 @@ export const parseItemNames = (input: string): TitleMatch[] => {
   const matchesArray = [...matches]
 
   const occurrences = getOccurrences(matchesArray)
-  const stdDeviation = mathjs.std(
-    Object.values(occurrences)
-  ) as unknown as number
-  const meanValue = mathjs.mean(Object.values(occurrences))
+  const stdDeviation = std(Object.values(occurrences)) as unknown as number
+  const meanValue = mean(Object.values(occurrences))
 
   const filteredMatches = matchesArray
     .filter(removeSmallNames)

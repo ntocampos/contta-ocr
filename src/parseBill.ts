@@ -44,7 +44,7 @@ const parseBill = async (
       )
       const priceMatches = parseItemPrices(priceSection)
 
-      if (priceMatches.length === 1)
+      if (priceMatches.length === 1) {
         return {
           name: titleMatch.text,
           amount: 1,
@@ -53,7 +53,7 @@ const parseBill = async (
           itemSection,
           priceMatches,
         }
-      else if (priceMatches.length === 0)
+      } else if (priceMatches.length === 2) {
         return {
           name: titleMatch.text,
           amount: priceMatches[1].decimal / priceMatches[0].decimal,
@@ -62,14 +62,14 @@ const parseBill = async (
           itemSection,
           priceMatches,
         }
-      else {
+      } else if (priceMatches.length > 2) {
         outliers.push({
           itemSection,
           priceMatches,
         })
-
-        return null
       }
+
+      return null
     })
     .filter((item) => item !== null) as Item[]
 
