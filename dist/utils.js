@@ -17,9 +17,12 @@ const getOccurrences = (matchList) => {
     });
     return output;
 };
-const parseItemNames = (input) => {
+const parseItemNames = (input, opts) => {
+    var _a, _b;
+    (_a = opts.logger) === null || _a === void 0 ? void 0 : _a.call(opts, 'Parsing item names');
     const matches = input.matchAll(titleRegex);
     const matchesArray = [...matches];
+    (_b = opts.logger) === null || _b === void 0 ? void 0 : _b.call(opts, { matchesArray });
     const occurrences = getOccurrences(matchesArray);
     const stdDeviation = (0, mathjs_1.std)(Object.values(occurrences));
     const meanValue = (0, mathjs_1.mean)(Object.values(occurrences));
@@ -36,9 +39,12 @@ const parseItemNames = (input) => {
     }));
 };
 exports.parseItemNames = parseItemNames;
-const parseItemPrices = (input) => {
+const parseItemPrices = (input, opts) => {
+    var _a, _b;
+    (_a = opts.logger) === null || _a === void 0 ? void 0 : _a.call(opts, 'Parsing item prices');
     const matches = input.matchAll(priceRegex);
     const matchesArray = [...matches];
+    (_b = opts.logger) === null || _b === void 0 ? void 0 : _b.call(opts, { matchesArray });
     return matchesArray.map((match) => ({
         text: match[0],
         index: match.index !== undefined ? match.index : -1,

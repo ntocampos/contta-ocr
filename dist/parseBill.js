@@ -11,10 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const recognizer_1 = require("./recognizer");
 const utils_1 = require("./utils");
-const parseBill = (imagePath, opts) => __awaiter(void 0, void 0, void 0, function* () {
+const parseBill = (imagePath, opts = {}) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     const recognizedText = yield (0, recognizer_1.default)(imagePath, opts);
+    (_a = opts.logger) === null || _a === void 0 ? void 0 : _a.call(opts, { recognizedText });
     const textLength = recognizedText.length;
-    const namesList = (0, utils_1.parseItemNames)(recognizedText);
+    const namesList = (0, utils_1.parseItemNames)(recognizedText, opts);
     const outliers = [];
     const items = namesList
         .map((titleMatch, index, list) => {
@@ -22,7 +24,7 @@ const parseBill = (imagePath, opts) => __awaiter(void 0, void 0, void 0, functio
         const nextMatchIndex = ((_a = list[index + 1]) === null || _a === void 0 ? void 0 : _a.index) || textLength;
         const itemSection = recognizedText.slice(titleMatch.index, nextMatchIndex);
         const priceSection = recognizedText.slice(titleMatch.index + titleMatch.text.length, nextMatchIndex);
-        const priceMatches = (0, utils_1.parseItemPrices)(priceSection);
+        const priceMatches = (0, utils_1.parseItemPrices)(priceSection, opts);
         if (priceMatches.length === 1) {
             return {
                 name: titleMatch.text,

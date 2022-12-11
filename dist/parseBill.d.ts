@@ -13,10 +13,10 @@ type Outlier = {
 };
 export type Options = {
     language?: 'por' | 'eng';
-    logger?: (message: string) => void;
+    logger?: (message: string | object) => void;
     errorHandler?: (error: unknown) => void;
 };
-declare const parseBill: (imagePath: string, opts: Options) => Promise<{
+declare const parseBill: (imagePath: string, opts?: Options) => Promise<{
     items: Item[];
     outliers: Outlier[];
 }>;
