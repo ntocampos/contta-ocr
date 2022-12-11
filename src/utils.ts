@@ -1,4 +1,5 @@
 import { std, mean } from 'mathjs'
+import { Options } from './parseBill'
 
 type Ocurrences = {
   [key: string]: number
@@ -39,9 +40,11 @@ const getOccurrences = (matchList: RegExpMatchArray[]): Ocurrences => {
   return output
 }
 
-export const parseItemNames = (input: string): TitleMatch[] => {
+export const parseItemNames = (input: string, opts: Options): TitleMatch[] => {
+  opts.logger?.('Parsing item names')
   const matches = input.matchAll(titleRegex)
   const matchesArray = [...matches]
+  opts.logger?.({ matchesArray })
 
   const occurrences = getOccurrences(matchesArray)
   const stdDeviation = std(Object.values(occurrences)) as unknown as number
@@ -61,9 +64,11 @@ export const parseItemNames = (input: string): TitleMatch[] => {
   }))
 }
 
-export const parseItemPrices = (input: string): PriceMatch[] => {
+export const parseItemPrices = (input: string, opts: Options): PriceMatch[] => {
+  opts.logger?.('Parsing item prices')
   const matches = input.matchAll(priceRegex)
   const matchesArray = [...matches]
+  opts.logger?.({ matchesArray })
 
   return matchesArray.map((match) => ({
     text: match[0],

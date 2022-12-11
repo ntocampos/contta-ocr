@@ -17,21 +17,22 @@ type Outlier = {
 
 export type Options = {
   language?: 'por' | 'eng'
-  logger?: (message: string) => void
+  logger?: (message: string | object) => void
   errorHandler?: (error: unknown) => void
 }
 
 const parseBill = async (
   imagePath: string,
-  opts: Options
+  opts: Options = {}
 ): Promise<{
   items: Item[]
   outliers: Outlier[]
 }> => {
   const recognizedText = await recognizer(imagePath, opts)
+  opts.logger?.({ recognizedText })
   const textLength = recognizedText.length
 
-  const namesList = parseItemNames(recognizedText)
+  const namesList = parseItemNames(recognizedText, opts)
   const outliers: Outlier[] = []
 
   const items = namesList
@@ -42,7 +43,7 @@ const parseBill = async (
         titleMatch.index + titleMatch.text.length,
         nextMatchIndex
       )
-      const priceMatches = parseItemPrices(priceSection)
+      const priceMatches = parseItemPrices(priceSection, opts)
 
       if (priceMatches.length === 1) {
         return {
