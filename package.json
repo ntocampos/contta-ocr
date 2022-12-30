@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": "dist/**/*",
+  "files": ["dist/**/*"],
   "repository": "https://github.com/ntocampos/contta-ocr.git",
   "author": "Moisés Neto",
   "license": "MIT",
@@ -13,6 +13,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "jimp": "^0.16.2",
     "mathjs": "^11.5.0",
     "tesseract.js": "^4.0.0"
   },
