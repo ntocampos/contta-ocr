@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseItemPrices = exports.parseItemNames = void 0;
 const mathjs_1 = require("mathjs");
 const titleRegex = /(\b[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9-]*(?: [a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9-]*)*\b)/g;
-const priceRegex = /(\d+ ?(\.|,)\d\d\b)/g;
+const priceRegex = /(\d+ ?(\.|,|\s)\d\d\b)/g;
 const toDecimal = (text) => {
     const cleanMatch = text.replace(',', '.').replace(' ', '');
     return parseFloat(cleanMatch);
@@ -31,7 +31,7 @@ const parseItemNames = (input, opts) => {
         .filter((match) => {
         const frequency = occurrences[match[0]];
         const diff = Math.abs(frequency - meanValue);
-        return diff < stdDeviation;
+        return diff <= stdDeviation;
     });
     return filteredMatches.map((match) => ({
         text: match[0].toLowerCase(),

@@ -11,9 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const recognizer_1 = require("./recognizer");
 const utils_1 = require("./utils");
+const prepare_1 = require("./prepare");
 const parseBill = (imagePath, opts = {}) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const recognizedText = yield (0, recognizer_1.default)(imagePath, opts);
+    const preparedImagePath = yield (0, prepare_1.default)(imagePath);
+    // const _unpreparedText = await recognizer(imagePath, opts)
+    const recognizedText = yield (0, recognizer_1.default)(preparedImagePath, opts);
     (_a = opts.logger) === null || _a === void 0 ? void 0 : _a.call(opts, { recognizedText });
     const textLength = recognizedText.length;
     const namesList = (0, utils_1.parseItemNames)(recognizedText, opts);
@@ -56,5 +59,8 @@ const parseBill = (imagePath, opts = {}) => __awaiter(void 0, void 0, void 0, fu
         .filter((item) => item !== null);
     return { items, outliers };
 });
+// parseBill('images/jabre-cropped.png').then((result) =>
+//   console.log(JSON.stringify(result, null, 2))
+// )
 exports.default = parseBill;
 //# sourceMappingURL=parseBill.js.map
