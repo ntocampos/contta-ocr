@@ -1,5 +1,6 @@
 import recognizer from './recognizer'
 import { parseItemPrices, parseItemNames, PriceMatch } from './utils'
+import prepareForOcr from './prepare'
 
 type Item = {
   name: string
@@ -28,8 +29,11 @@ const parseBill = async (
   items: Item[]
   outliers: Outlier[]
 }> => {
-  const recognizedText = await recognizer(imagePath, opts)
+  const preparedImagePath = await prepareForOcr(imagePath)
+  // const _unpreparedText = await recognizer(imagePath, opts)
+  const recognizedText = await recognizer(preparedImagePath, opts)
   opts.logger?.({ recognizedText })
+
   const textLength = recognizedText.length
 
   const namesList = parseItemNames(recognizedText, opts)
@@ -76,5 +80,9 @@ const parseBill = async (
 
   return { items, outliers }
 }
+
+// parseBill('images/jabre-cropped.png').then((result) =>
+//   console.log(JSON.stringify(result, null, 2))
+// )
 
 export default parseBill

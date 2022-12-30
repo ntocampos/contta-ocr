@@ -19,7 +19,7 @@ export type PriceMatch = {
 const titleRegex =
   /(\b[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9-]*(?: [a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9-]*)*\b)/g
 
-const priceRegex = /(\d+ ?(\.|,)\d\d\b)/g
+const priceRegex = /(\d+ ?(\.|,|\s)\d\d\b)/g
 
 const toDecimal = (text: string): number => {
   const cleanMatch = text.replace(',', '.').replace(' ', '')
@@ -55,7 +55,7 @@ export const parseItemNames = (input: string, opts: Options): TitleMatch[] => {
     .filter((match) => {
       const frequency = occurrences[match[0]]
       const diff = Math.abs(frequency - meanValue)
-      return diff < stdDeviation
+      return diff <= stdDeviation
     })
 
   return filteredMatches.map((match) => ({
